@@ -13,6 +13,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
+from lazypredict.Supervised import LazyRegressor
 
 data = pd.read_csv('StudentScore.xls')
 # profile = ProfileReport(data, title='Student Score Report', explorative=True)
@@ -72,7 +73,7 @@ model = GridSearchCV(
 )
 
 
-model.fit(x_train, y_train)
+#model.fit(x_train, y_train)
 # y_predict = model.predict(x_test)
 # print(model.best_score_)
 # print(model.best_params_)
@@ -80,14 +81,17 @@ model.fit(x_train, y_train)
 # print("MSE:{}".format(mean_squared_error(y_test, y_predict)))
 # print("R2:{}".format(r2_score(y_test, y_predict)))
 
-fake_data = pd.DataFrame.from_dict({
-    "gender": ["male"],
-    "race/ethnicity": ["group A"],
-    "parental level of education": ["master's degree"],
-    "lunch": ["standard"],
-    "test preparation course": ["none"],
-    "reading score": [100],
-    "writing score": [100]
-})
-print(model.predict(fake_data))
+# fake_data = pd.DataFrame.from_dict({
+#     "gender": ["male"],
+#     "race/ethnicity": ["group A"],
+#     "parental level of education": ["master's degree"],
+#     "lunch": ["standard"],
+#     "test preparation course": ["none"],
+#     "reading score": [100],
+#     "writing score": [100]
+# })
+# print(model.predict(fake_data))
+
+clf = LazyRegressor(verbose=0, ignore_warnings=True, custom_metric=None)
+models, predictions = clf.fit(x_train, x_test, y_train, y_test)
 
